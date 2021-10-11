@@ -36,4 +36,6 @@ public class ManagerModel implements Serializable{
     private LocalDate date_of_birth;
 
     // relasi dengan store
+    @OneToOne(mappedBy = "manager")
+    private StoreModel store;
 }

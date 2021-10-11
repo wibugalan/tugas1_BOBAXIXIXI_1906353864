@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter @Getter
 @Entity
-@Table(name = "boba tea")
+@Table(name = "boba_tea")
 public class BobaTeaModel implements Serializable {
     @Id
     @Size(max = 20)
@@ -45,11 +45,13 @@ public class BobaTeaModel implements Serializable {
     @Column(nullable = false)
     private Integer sugar_level;
 
-    //Relasi dengan ToppingModel
+    // Relasi dengan ToppingModel
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_topping", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ToppingModel topping;
 
-    // realasi dengan store boba tea
+    // Relasi dengan store boba tea
+    @OneToMany(mappedBy = "bobaTea", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<StoreBobaTeaModel> listStoreBobaTea;
 }

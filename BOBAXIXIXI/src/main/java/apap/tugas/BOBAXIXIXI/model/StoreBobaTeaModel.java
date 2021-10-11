@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter @Getter
 @Entity
-@Table(name = "store_boba tea")
+@Table(name = "store_boba_tea")
 public class StoreBobaTeaModel implements Serializable {
     @Id
     @Size(max = 20)
@@ -22,8 +22,14 @@ public class StoreBobaTeaModel implements Serializable {
     private Long id;
 
     // relation with store
+    @ManyToOne
+    @JoinColumn(name = "id_store")
+    StoreModel store;
 
     // relation with boba tea
+    @ManyToOne
+    @JoinColumn(name = "id_boba")
+    BobaTeaModel bobaTea;
 
     @NotNull
     @Size(max = 12)
