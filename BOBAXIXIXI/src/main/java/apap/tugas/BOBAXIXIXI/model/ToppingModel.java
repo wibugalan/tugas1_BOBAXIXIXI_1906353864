@@ -18,8 +18,9 @@ import java.util.List;
 @Table(name = "topping")
 public class ToppingModel implements Serializable {
     @Id
-    @Size(max = 20)
+//    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @NotNull

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Store</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body style="background: #FAEBD7">
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="justify-content: center; align-items: center">
+    <div class="d-flex justify-content-center">
+        <div class="container-xl  justify-content-center" style="background:white; height: 1000px; border-radius: 25px; margin: 50px; justify-content: center; align-items: center;border-color: sandybrown">
+            <div style="justify-content: center; align-items: center">
+    <h2>List of Store</h2>
+            </div>
+    <br>
+    <a class="btn btn-danger" style="color: white; background: coral">+Add Store</a>
+    <table class="table">
+        <thead>
+        <tr style="background: #6D4C41;color: white">
+            <th>No</th>
+            <th>Store Code</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Operational Hour</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="store, iterationStatus : ${listStore}"
+            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+            <td th:text="${store.id}"></td>
+            <td th:text="${store.store_code}"></td>
+            <td th:text="${store.address}"></td>
+            <td th:text="${store.open_hour} - ${store.close_hour}"></td>
+            <td>
+                <a class="btn btn-primary">View</a>
+                <a class="btn btn-warning">Update</a>
+                <a class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

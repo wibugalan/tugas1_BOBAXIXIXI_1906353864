@@ -20,8 +20,9 @@ import java.util.List;
 @Table(name = "boba_tea")
 public class BobaTeaModel implements Serializable {
     @Id
-    @Size(max = 20)
+//    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @NotNull
@@ -51,7 +52,7 @@ public class BobaTeaModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ToppingModel topping;
 
-    // Relasi dengan store boba tea
+    // Relasi dengan store-boba tea
     @OneToMany(mappedBy = "bobaTea", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<StoreBobaTeaModel> listStoreBobaTea;
 }

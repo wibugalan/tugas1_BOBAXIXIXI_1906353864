@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ public class ManagerModel implements Serializable{
     @Id
     @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @NotNull
@@ -33,6 +35,7 @@ public class ManagerModel implements Serializable{
 
     @NotNull
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate date_of_birth;
 
     // relasi dengan store
