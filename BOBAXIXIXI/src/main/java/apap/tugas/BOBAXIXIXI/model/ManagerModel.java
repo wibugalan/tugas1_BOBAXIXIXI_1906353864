@@ -19,7 +19,6 @@ import java.time.LocalDate;
 @Table(name = "manager")
 public class ManagerModel implements Serializable{
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;

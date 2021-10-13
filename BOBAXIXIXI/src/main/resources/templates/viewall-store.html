@@ -17,7 +17,7 @@
     <h2>List of Store</h2>
             </div>
     <br>
-    <a class="btn btn-danger" style="color: white; background: coral">+Add Store</a>
+    <a class="btn btn-danger" th:href="@{/store/add}" style="color: white; background: coral">+Add Store</a>
     <table class="table">
         <thead>
         <tr style="background: #6D4C41;color: white">
@@ -31,15 +31,16 @@
         </thead>
         <tbody>
         <tr th:each="store, iterationStatus : ${listStore}"
-            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+            th:style="${iterationStatus.even} ? 'background: #F5F5DC;'">
             <td th:text="${store.id}"></td>
+            <td th:text="${store.name }"></td>
             <td th:text="${store.store_code}"></td>
             <td th:text="${store.address}"></td>
-            <td th:text="${store.open_hour} - ${store.close_hour}"></td>
+            <td th:text="${store.open_hour} + ' - ' + ${store.close_hour}"></td>
             <td>
                 <a class="btn btn-primary">View</a>
-                <a class="btn btn-warning">Update</a>
-                <a class="btn btn-danger">Delete</a>
+                <a class="btn btn-warning" th:href="@{/store/update/} + ${store.id}">Update</a>
+                <a class="btn btn-danger" th:href="@{/store/delete/} + ${store.id}">Delete</a>
             </td>
         </tr>
         </tbody>

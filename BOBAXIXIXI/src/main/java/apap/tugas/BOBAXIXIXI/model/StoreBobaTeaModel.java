@@ -17,7 +17,6 @@ import java.io.Serializable;
 @Table(name = "store_boba_tea")
 public class StoreBobaTeaModel implements Serializable {
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;

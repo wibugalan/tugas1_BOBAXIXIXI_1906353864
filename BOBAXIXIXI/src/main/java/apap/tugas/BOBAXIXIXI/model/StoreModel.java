@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +22,6 @@ import java.util.Set;
 @Table(name = "store")
 public class StoreModel implements Serializable {
     @Id
-    @Size(max = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
