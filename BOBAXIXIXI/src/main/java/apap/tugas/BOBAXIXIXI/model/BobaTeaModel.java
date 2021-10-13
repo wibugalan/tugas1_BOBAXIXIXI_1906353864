@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,5 +55,5 @@ public class BobaTeaModel implements Serializable {
 
     // Relasi dengan store-boba tea
     @OneToMany(mappedBy = "bobaTea", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StoreBobaTeaModel> listStoreBobaTea;
+    Set<StoreBobaTeaModel> listStoreBobaTea;
 }

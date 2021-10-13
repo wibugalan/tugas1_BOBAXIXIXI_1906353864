@@ -6,7 +6,7 @@ import apap.tugas.BOBAXIXIXI.model.StoreModel;
 import java.util.List;
 
 public interface StoreService {
-    List<StoreModel> getBioskopList();
+    List<StoreModel> getStoreList();
     void addStore(StoreModel store);
     void generateCode(StoreModel store);
     StoreModel getStoreById(Long id);

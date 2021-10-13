@@ -18,7 +18,7 @@ public class StoreServiceImpl implements StoreService{
     StoreDB storeDB;
 
     @Override
-    public List<StoreModel> getBioskopList() {
+    public List<StoreModel> getStoreList() {
         return storeDB.findAll();
     }
 

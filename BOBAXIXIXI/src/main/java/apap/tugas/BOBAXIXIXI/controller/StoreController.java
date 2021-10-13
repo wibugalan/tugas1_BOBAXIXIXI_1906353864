@@ -31,7 +31,7 @@ public class StoreController {
 
     @GetMapping("/store")
     public String viewAllStore(Model model) {
-        List<StoreModel> listStore = storeService.getBioskopList();
+        List<StoreModel> listStore = storeService.getStoreList();
         model.addAttribute("listStore", listStore);
         return "viewall-store";
     }

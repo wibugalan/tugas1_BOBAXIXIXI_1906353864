@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -59,5 +60,5 @@ public class StoreModel implements Serializable {
 
     // relasi dengan store_boba tea
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<StoreBobaTeaModel> listStoreBobaTea;
+    Set<StoreBobaTeaModel> listStoreBobaTea;
 }

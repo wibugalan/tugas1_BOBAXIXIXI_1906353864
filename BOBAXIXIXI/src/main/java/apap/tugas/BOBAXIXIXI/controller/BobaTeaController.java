@@ -1,8 +1,12 @@
 package apap.tugas.BOBAXIXIXI.controller;
 
 import apap.tugas.BOBAXIXIXI.model.BobaTeaModel;
+import apap.tugas.BOBAXIXIXI.model.StoreBobaTeaModel;
+import apap.tugas.BOBAXIXIXI.model.StoreModel;
 import apap.tugas.BOBAXIXIXI.model.ToppingModel;
 import apap.tugas.BOBAXIXIXI.service.BobaTeaService;
+import apap.tugas.BOBAXIXIXI.service.StoreBobaTeaService;
+import apap.tugas.BOBAXIXIXI.service.StoreService;
 import apap.tugas.BOBAXIXIXI.service.ToppingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +26,14 @@ public class BobaTeaController {
     @Qualifier("toppingServiceImpl")
     @Autowired
     private ToppingService toppingService;
+
+    @Qualifier("storeServiceImpl")
+    @Autowired
+    private StoreService storeService;
+
+    @Qualifier("storeBobaTeaServiceImpl")
+    @Autowired
+    private StoreBobaTeaService storeBobaTeaService;
 
     @GetMapping("/boba")
     public String viewAllBoba(Model model) {
@@ -90,4 +102,35 @@ public class BobaTeaController {
         return "update-boba";
     }
 
+    @GetMapping("/boba/{id}/assign-store")
+    public String assignBobaForm(
+            @PathVariable Long id,
+            Model model
+    ) {
+        BobaTeaModel boba = bobaTeaService.getBobaById(id);
+        List<StoreModel> listStore = storeService.getStoreList();
+        model.addAttribute("storeBoba", new StoreBobaTeaModel());
+        model.addAttribute("boba", boba);
+        model.addAttribute("listStore", listStore);
+        return "form-assign-store";
+    }
+
+    @PostMapping("/boba/{id}/assign-store")
+    public String assignBobaSubmit(
+            @ModelAttribute StoreBobaTeaModel storeBoba,
+            @PathVariable Long id,
+            Model model,
+            @RequestParam(value="store")Long[] storeList
+    ) {
+        BobaTeaModel boba = bobaTeaService.getBobaById(id);
+        storeBoba.setBobaTea(boba);
+        for(Long i: storeList) {
+            StoreBobaTeaModel temp = new StoreBobaTeaModel();
+            temp.setBobaTea(boba);
+            temp.setStore(storeService.getStoreById(i));
+            storeBobaTeaService.generateCode(temp);
+            storeBobaTeaService.addStoreBoba(temp);
+        }
+        return "add-boba";
+    }
 }

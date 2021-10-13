@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Assign Boba</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body style="background: #FAEBD7">
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="justify-content: center; align-items: center">
+    <div class="d-flex justify-content-center">
+        <div class="container-xl  justify-content-center" style="background:white; height: 1000px; border-radius: 25px; margin: 50px; justify-content: center; align-items: center;border-color: sandybrown">
+            <form th:action="@{/boba/} + ${boba.id} + @{/assign-store/}" th:object="${storeBoba}" method="POST">
+                <input type="hidden" th:field="${boba}" />
+            <div style="justify-content: center; align-items: center">
+                <h2 th:text="'add ' + ${boba.name} + ' to store.'"></h2>
+            </div>
+            <br>
+            <table class="table">
+                <thead>
+                <tr style="background: #6D4C41;color: white">
+                    <th></th>
+                    <th>Store Code</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Operational Hour</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="store, iterationStatus : ${listStore}"
+                    th:style="${iterationStatus.even} ? 'background: #F5F5DC;'">
+                    <td>
+                        <input type="checkbox" name="store" th:value="${store.id}">
+                    </td>
+                    <td th:text="${store.store_code}"></td>
+                    <td th:text="${store.name }"></td>
+                    <td th:text="${store.address}"></td>
+                    <td th:text="${store.open_hour} + ' - ' + ${store.close_hour}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br><br>
+            <div>
+                <input class="btn btn-primary" type="submit">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

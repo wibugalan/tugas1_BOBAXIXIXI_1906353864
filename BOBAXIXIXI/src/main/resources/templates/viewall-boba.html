@@ -48,7 +48,7 @@
                     <td th:if="${boba.sugar_level} == 2">Extra</td>
                     <td th:text="${boba.topping.name}"></td>
                     <td>
-                        <a class="btn btn-primary" >Assign</a>
+                        <a class="btn btn-primary" th:href="@{/boba/} + ${boba.id} + @{/assign-store/}">Assign</a>
                         <a class="btn btn-warning" th:href="@{/boba/update/} + ${boba.id}">Update</a>
                         <a class="btn btn-danger" th:href="@{/boba/delete/} + ${boba.id}">Delete</a>
                     </td>
