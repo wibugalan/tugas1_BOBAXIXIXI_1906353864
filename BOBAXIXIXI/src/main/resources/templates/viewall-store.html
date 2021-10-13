@@ -38,7 +38,7 @@
             <td th:text="${store.address}"></td>
             <td th:text="${store.open_hour} + ' - ' + ${store.close_hour}"></td>
             <td>
-                <a class="btn btn-primary">View</a>
+                <a class="btn btn-primary" th:href="@{/store/} + ${store.id}">View</a>
                 <a class="btn btn-warning" th:href="@{/store/update/} + ${store.id}">Update</a>
                 <a class="btn btn-danger" th:href="@{/store/delete/} + ${store.id}">Delete</a>
             </td>

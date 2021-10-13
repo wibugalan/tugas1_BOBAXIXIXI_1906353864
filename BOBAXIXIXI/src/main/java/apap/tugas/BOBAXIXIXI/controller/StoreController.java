@@ -1,21 +1,18 @@
 package apap.tugas.BOBAXIXIXI.controller;
 
-import apap.tugas.BOBAXIXIXI.model.BobaTeaModel;
-import apap.tugas.BOBAXIXIXI.model.ManagerModel;
-import apap.tugas.BOBAXIXIXI.model.StoreModel;
-import apap.tugas.BOBAXIXIXI.model.ToppingModel;
+import apap.tugas.BOBAXIXIXI.model.*;
+import apap.tugas.BOBAXIXIXI.service.BobaTeaService;
 import apap.tugas.BOBAXIXIXI.service.ManagerService;
+import apap.tugas.BOBAXIXIXI.service.StoreBobaTeaService;
 import apap.tugas.BOBAXIXIXI.service.StoreService;
 import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,15 +22,38 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
+    @Qualifier("bobaTeaServiceImpl")
+    @Autowired
+    private BobaTeaService bobaTeaService;
+
     @Qualifier("managerServiceImpl")
     @Autowired
     private ManagerService managerService;
+
+    @Qualifier("storeBobaTeaServiceImpl")
+    @Autowired
+    private StoreBobaTeaService storeBobaTeaService;
 
     @GetMapping("/store")
     public String viewAllStore(Model model) {
         List<StoreModel> listStore = storeService.getStoreList();
         model.addAttribute("listStore", listStore);
         return "viewall-store";
+    }
+
+    @GetMapping("/store/{id}")
+    public String viewStore(
+            @PathVariable Long id,
+            Model model
+    ) {
+        StoreModel store = storeService.getStoreById(id);
+        List<BobaTeaModel> listBoba= new ArrayList<BobaTeaModel>();
+        for (StoreBobaTeaModel s : store.getListStoreBobaTea()) {
+            listBoba.add(s.getBobaTea());
+        }
+        model.addAttribute("listBoba", listBoba);
+        model.addAttribute("store", store);
+        return "view-store";
     }
 
     @GetMapping("/store/add")
@@ -98,5 +118,37 @@ public class StoreController {
         model.addAttribute("name", store.getName());
         model.addAttribute("kode", store.getStore_code());
         return "update-store";
+    }
+
+    @GetMapping("/store/{id}/assign-boba")
+    public String assignStoreForm(
+            @PathVariable Long id,
+            Model model
+    ) {
+        StoreModel store = storeService.getStoreById(id);
+        List<BobaTeaModel> listBoba = bobaTeaService.getBobaTeaList();
+        model.addAttribute("storeBoba", new StoreBobaTeaModel());
+        model.addAttribute("store", store);
+        model.addAttribute("listBoba", listBoba);
+        return "form-assign-boba";
+    }
+
+    @PostMapping("/store/{id}/assign-boba")
+    public String assignStoreSubmit(
+            @ModelAttribute StoreBobaTeaModel storeBoba,
+            @PathVariable Long id,
+            Model model,
+            @RequestParam(value="boba")Long[] bobaList
+    ) {
+        StoreModel store = storeService.getStoreById(id);
+        storeBoba.setStore(store);
+        for(Long i: bobaList) {
+            StoreBobaTeaModel temp = new StoreBobaTeaModel();
+            temp.setStore(store);
+            temp.setBobaTea(bobaTeaService.getBobaById(i));
+            storeBobaTeaService.generateCode(temp);
+            storeBobaTeaService.addStoreBoba(temp);
+        }
+        return "add-store";
     }
 }
