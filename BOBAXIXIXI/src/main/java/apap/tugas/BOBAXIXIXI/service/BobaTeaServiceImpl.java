@@ -34,6 +34,15 @@ public class BobaTeaServiceImpl implements BobaTeaService{
     }
 
     @Override
+    public BobaTeaModel getBobaByName(String name) {
+        Optional<BobaTeaModel> boba = bobaTeaDB.findByName(name);
+        if(boba.isPresent()){
+            return boba.get();
+        }
+        return null;
+    }
+
+    @Override
     public void deleteBoba(BobaTeaModel boba) {
         bobaTeaDB.delete(boba);
     }

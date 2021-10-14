@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface BobaTeaDB extends JpaRepository<BobaTeaModel, Long> {
     Optional<BobaTeaModel> findById(Long id);
+    Optional<BobaTeaModel> findByName(String name);
 }
