@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Assign Store</title>
@@ -13,11 +13,11 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div style="justify-content: center; align-items: center">
     <div class="d-flex justify-content-center">
-        <div class="container-xl  justify-content-center" style="background:white; height: 1000px; border-radius: 25px; margin: 50px; justify-content: center; align-items: center;border-color: sandybrown">
+        <div class="container-xl  justify-content-center" style="background:white; height: 900px; border-radius: 20px; margin: 50px; justify-content: center; align-items: center;border-color: sandybrown">
             <form th:action="@{/store/} + ${store.id} + @{/assign-boba/}" th:object="${storeBoba}" method="POST">
                 <input type="hidden" th:field="${store}" />
                 <div style="justify-content: center; align-items: center">
-                    <h2 th:text="'Add Boba to ' + ${store.name}"></h2>
+                    <h2 class="text-center" th:text="'Add Boba to ' + ${store.name}"></h2>
                 </div>
                 <br>
                 <table class="table">

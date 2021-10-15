@@ -101,8 +101,19 @@ public class StoreController {
             @RequestParam(value="jamBuka")String buka,
             @RequestParam(value="jamTutup")String tutup
     ) {
+        List<StoreBobaTeaModel> listSB = storeBobaTeaService.getStoreBobaTeaList();
+        boolean temp = false;
+        for (StoreBobaTeaModel l : listSB) {
+            if(l.getStore().getId() == store.getId()) {
+                temp = true;
+                break;
+            }
+        }
         if (storeService.cekBuka(buka, tutup)) {
             return "delete-store-buka";
+        }
+        else if (temp) {
+            return "delete-store-boba";
         }
         else {
             model.addAttribute("name", store.getName());
@@ -179,6 +190,12 @@ public class StoreController {
             storeBobaTeaService.generateCode(temp);
             storeBobaTeaService.addStoreBoba(temp);
         }
-        return "add-store";
+        List<BobaTeaModel> listBoba= new ArrayList<BobaTeaModel>();
+        for (StoreBobaTeaModel s : store.getListStoreBobaTea()) {
+            listBoba.add(s.getBobaTea());
+        }
+        model.addAttribute("listBoba", listBoba);
+        model.addAttribute("store", store);
+        return "assigned-boba";
     }
 }

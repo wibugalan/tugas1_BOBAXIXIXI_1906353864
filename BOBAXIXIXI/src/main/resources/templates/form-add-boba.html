@@ -19,15 +19,16 @@
                 <br>
                 <form th:action="@{/boba/add}" th:object="${boba}" method="POST">
                     Boba Tea Name : <br>
-                    <input required class="form-control" type="text" name="name" />
+                    <input required class="form-control" type="text" name="name" placeholder="Tea Name.."/>
                     <br><br>
 
                     Price: <br>
-                    <input required class="form-control" type="text" name="price"/>
+                    <input required class="form-control" type="text" name="price" placeholder="Price.."/>
                     <br><br>
 
                     Size : <br>
-                    <select name="size">
+                    <select required name="size">
+                        <option value="" disabled selected hidden>---Select Size---</option>
                         <option value="0">S</option>
                         <option value="1">M</option>
                         <option value="2">L</option>
@@ -35,7 +36,8 @@
                     <br><br>
 
                     Sugar Level : <br>
-                    <select name="sugar_level">
+                    <select required name="sugar_level">
+                        <option value="" disabled selected hidden>---Select Sugar Level---</option>
                         <option value="0">Less</option>
                         <option value="1">Normall</option>
                         <option value="2">Extra</option>
@@ -43,7 +45,8 @@
                     <br><br>
 
                     Ice Level : <br>
-                    <select name="ice_level">
+                    <select required name="ice_level">
+                        <option value="" disabled selected hidden>---Select Ize Level---</option>
                         <option value="0">Less</option>
                         <option value="1">Normall</option>
                         <option value="2">Extra</option>
@@ -51,12 +54,14 @@
                     <br><br>
 
                     Topping : <br>
-                    <select name="topping" class="form-control" >
+                    <select required name="topping" class="form-control" >
+                        <option value="" disabled selected hidden>---Select Topping---</option>
                         <option th:each="topping : ${listTopping}" th:value="${topping.id}" th:text="${topping.name}" ></option>
                     </select>
                     <br><br>
                     <div>
-                        <input class="btn btn-primary" type="submit">
+                        <a class="btn btn-outline-primary" th:href="@{/boba}">Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Save">
                     </div>
                 </form>
             </div>

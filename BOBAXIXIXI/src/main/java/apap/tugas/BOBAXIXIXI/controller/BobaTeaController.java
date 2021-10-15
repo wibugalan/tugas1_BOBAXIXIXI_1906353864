@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -75,9 +76,22 @@ public class BobaTeaController {
             @ModelAttribute BobaTeaModel boba,
             Model model
     ) {
-        model.addAttribute("name", boba.getName());
-        bobaTeaService.deleteBoba(boba);
-        return "delete-boba";
+        List<StoreBobaTeaModel> listSB = storeBobaTeaService.getStoreBobaTeaList();
+        boolean temp = false;
+        for (StoreBobaTeaModel l : listSB) {
+            if(l.getBobaTea().getId() == boba.getId()) {
+                temp = true;
+                break;
+            }
+        }
+        if (temp) {
+            return "delete-boba-assigned";
+        }
+        else {
+            model.addAttribute("name", boba.getName());
+            bobaTeaService.deleteBoba(boba);
+            return "delete-boba";
+        }
     }
 
     @GetMapping("/boba/update/{id}")
@@ -97,9 +111,22 @@ public class BobaTeaController {
             @ModelAttribute BobaTeaModel boba,
             Model model
     ) {
-        bobaTeaService.updateBoba(boba);
-        model.addAttribute("name", boba.getName());
-        return "update-boba";
+        List<StoreBobaTeaModel> listSB = storeBobaTeaService.getStoreBobaTeaList();
+        boolean temp = false;
+        for (StoreBobaTeaModel l : listSB) {
+            if(l.getBobaTea().getId() == boba.getId()) {
+                temp = true;
+                break;
+            }
+        }
+        if (temp) {
+            return "update-boba-assigned";
+        }
+        else {
+            bobaTeaService.updateBoba(boba);
+            model.addAttribute("name", boba.getName());
+            return "update-boba";
+        }
     }
 
     @GetMapping("/boba/{id}/assign-store")
@@ -131,6 +158,13 @@ public class BobaTeaController {
             storeBobaTeaService.generateCode(temp);
             storeBobaTeaService.addStoreBoba(temp);
         }
-        return "add-boba";
+        List<StoreModel> listStore= new ArrayList<>();
+        for (StoreBobaTeaModel s : boba.getListStoreBobaTea()) {
+            listStore.add(s.getStore());
+        }
+        model.addAttribute("listStore", listStore);
+        model.addAttribute("boba", boba);
+
+        return "assigned-store";
     }
 }

@@ -15,17 +15,9 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2>Delete Store</h2>
+                <h2 th:text="'This store still has boba tea and cant be deleted'"></h2>
                 <br>
-                <form th:action="@{/store/delete}" th:object="${store}" method="POST">
-                    <input type="hidden" name="jamBuka" th:value="${store.open_hour}" />
-                    <input type="hidden" name="jamTutup" th:value="${store.close_hour}" />
-                    <input type="hidden" th:field="*{id}" />
-                    <input type="hidden" th:field="*{name}" />
-                    <h4>Apakah anda yakin untuk menghapus store ini?</h4>
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <a class="btn btn-outline-primary" th:href="@{/store}">Cancel</a>
-                </form>
+                <a class="text text-warning" href="/store" style="text-decoration: none;"><-- back to list of store</a>
             </div>
         </div>
     </div>

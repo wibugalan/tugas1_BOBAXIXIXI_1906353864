@@ -23,8 +23,9 @@
                     <br><br>
 
                     Manager : <br>
-                    <select name="manager" class="form-control" >
-                        <option th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}" x-placement="-- Manager --"></option>
+                    <select required name="manager" class="form-control" >
+                        <option value="" disabled selected hidden>---Select Manager---</option>
+                        <option th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}"></option>
                     </select>
                     <br><br>
 

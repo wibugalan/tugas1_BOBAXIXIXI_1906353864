@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Assign Boba</title>
@@ -17,7 +17,7 @@
             <form th:action="@{/boba/} + ${boba.id} + @{/assign-store/}" th:object="${storeBoba}" method="POST">
                 <input type="hidden" th:field="${boba}" />
             <div style="justify-content: center; align-items: center">
-                <h2 th:text="'add ' + ${boba.name} + ' to store.'"></h2>
+                <h2 class="text-center" th:text="'add ' + ${boba.name} + ' to store'"></h2>
             </div>
             <br>
             <table class="table">
