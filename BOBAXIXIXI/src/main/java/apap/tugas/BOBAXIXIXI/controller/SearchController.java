@@ -29,17 +29,6 @@ public class SearchController {
     @Autowired
     private ToppingService toppingService;
 
-//    @GetMapping("/search")
-//    public String search(
-//            Model model
-//    ) {
-//        List<BobaTeaModel> listBoba = bobaTeaService.getBobaTeaList();
-//        List<ToppingModel> listTopping = toppingService.getToppingList();
-//        model.addAttribute("listBoba", listBoba);
-//        model.addAttribute("listTopping", listTopping);
-//        return "search";
-//    }
-
     @GetMapping("/search")
     public String search(
             @RequestParam(value = "bobaName", required = false) String namaBoba,
@@ -52,7 +41,6 @@ public class SearchController {
             setNama.add(i.getName());
         }
         List<ToppingModel> listTopping = toppingService.getToppingList();
-//        model.addAttribute("listBoba", listBoba);
         model.addAttribute("listBoba", setNama);
         model.addAttribute("listTopping", listTopping);
         ToppingModel topping = toppingService.getToppingByName(namaTopping);
