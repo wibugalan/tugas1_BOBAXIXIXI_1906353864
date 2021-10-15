@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -72,5 +74,17 @@ public class StoreServiceImpl implements StoreService{
     @Override
     public void updateStore(StoreModel store) {
         storeDB.save(store);
+    }
+
+    @Override
+    public boolean cekBuka(String bukaJ, String tutupJ) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime buka = LocalTime.parse(bukaJ, formatter);
+        LocalTime tutup = LocalTime.parse(tutupJ, formatter);
+        LocalTime localTime = LocalTime.now();
+        if ((tutup.isAfter(localTime)) && (buka.isBefore(localTime))) {
+            return true;
+        }
+        return false;
     }
 }

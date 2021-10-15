@@ -19,17 +19,17 @@
                 <br>
                 <form th:action="@{/store/add}" th:object="${store}" method="POST">
                     Store Name : <br>
-                    <input required class="form-control" type="text" name="name" />
+                    <input required class="form-control" type="text" name="name"placeholder="Store Name"/>
                     <br><br>
 
                     Manager : <br>
                     <select name="manager" class="form-control" >
-                        <option th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}" ></option>
+                        <option th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}" x-placement="-- Manager --"></option>
                     </select>
                     <br><br>
 
                     Address: <br>
-                    <input required class="form-control" type="text" name="address"/>
+                    <input required class="form-control" type="text" name="address" placeholder="Address.."/>
                     <br><br>
 
                     Open Hour : <br>
@@ -41,7 +41,8 @@
                     <br><br>
 
                     <div>
-                        <input class="btn btn-primary" type="submit">
+                        <a class="btn btn-outline-primary" th:href="@{/store}">Cancel</a>
+                        <input class="btn btn-primary" type="submit" value="Save">
                     </div>
                 </form>
             </div>

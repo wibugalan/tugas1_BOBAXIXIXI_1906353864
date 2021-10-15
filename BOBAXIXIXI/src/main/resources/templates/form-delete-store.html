@@ -18,6 +18,8 @@
                 <h2>Delete Store</h2>
                 <br>
                 <form th:action="@{/store/delete}" th:object="${store}" method="POST">
+                    <input type="hidden" name="jamBuka" th:value="${store.open_hour}" />
+                    <input type="hidden" name="jamTutup" th:value="${store.close_hour}" />
                     <input type="hidden" th:field="*{id}" />
                     <input type="hidden" th:field="*{name}" />
                     <h4>Apakah anda yakin untuk menghapus store ini?</h4>

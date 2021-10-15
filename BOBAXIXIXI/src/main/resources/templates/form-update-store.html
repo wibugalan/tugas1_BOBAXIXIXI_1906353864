@@ -18,27 +18,29 @@
                 <h2>Update Store</h2>
                 <br>
                 <form th:action="@{/store/update}" th:object="${store}" method="POST">
+                    <input type="hidden" name="jamBuka" th:value="${store.open_hour}" />
+                    <input type="hidden" name="jamTutup" th:value="${store.close_hour}" />
                     <input type="hidden" th:field="*{id}" />
                     Store Name : <br>
-                    <input required class="form-control" type="text" name="name" />
+                    <input required class="form-control" type="text" name="name" th:field="${store.name}"/>
                     <br><br>
 
                     Manager : <br>
                     <select name="manager" class="form-control" >
-                        <option th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}" ></option>
+                        <option th:field="${store.manager.full_name}" th:each="manager : ${listManager}" th:value="${manager.id}" th:text="${manager.full_name}" ></option>
                     </select>
                     <br><br>
 
                     Address: <br>
-                    <input required class="form-control" type="text" name="address"/>
+                    <input required class="form-control" type="text" name="address" th:field="${store.address}"/>
                     <br><br>
 
                     Open Hour : <br>
-                    <input required class="form-control" type="time" name="open_hour" />
+                    <input required class="form-control" type="time" name="open_hour" th:field="${store.open_hour}"/>
                     <br><br>
 
                     Close Hour : <br>
-                    <input required class="form-control" type="time" name="close_hour" />
+                    <input required class="form-control" type="time" name="close_hour" th:field="${store.close_hour}"/>
                     <br><br>
 
                     <div>

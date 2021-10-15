@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,13 @@ public class StoreController {
     @GetMapping("/store/add")
     public String addStoreForm(Model model) {
         List<ManagerModel> listManager = managerService.getManagerList();
-        model.addAttribute("listManager", listManager);
+        List<ManagerModel> listManagerNotUsed = new ArrayList<>();
+        for (ManagerModel m: listManager) {
+            if (m.getStore()== null) {
+                listManagerNotUsed.add(m);
+            }
+        }
+        model.addAttribute("listManager", listManagerNotUsed);
         model.addAttribute("store", new StoreModel());
         return "form-add-store";
     }
@@ -89,11 +97,18 @@ public class StoreController {
     @PostMapping("/store/delete")
     public String deleteStoreSubmit(
             @ModelAttribute StoreModel store,
-            Model model
+            Model model,
+            @RequestParam(value="jamBuka")String buka,
+            @RequestParam(value="jamTutup")String tutup
     ) {
-        model.addAttribute("name", store.getName());
-        storeService.deleteStore(store);
-        return "delete-store";
+        if (storeService.cekBuka(buka, tutup)) {
+            return "delete-store-buka";
+        }
+        else {
+            model.addAttribute("name", store.getName());
+            storeService.deleteStore(store);
+            return "delete-store";
+        }
     }
 
     @GetMapping("/store/update/{id}")
@@ -103,21 +118,36 @@ public class StoreController {
     ) {
         StoreModel store = storeService.getStoreById(id);
         List<ManagerModel> listManager = managerService.getManagerList();
-        model.addAttribute("listManager", listManager);
+        List<ManagerModel> listManagerNotUsed = new ArrayList<>();
+        listManagerNotUsed.add(store.getManager());
+        for (ManagerModel m: listManager) {
+            if (m.getStore()== null) {
+                listManagerNotUsed.add(m);
+            }
+        }
+        model.addAttribute("listManager", listManagerNotUsed);
         model.addAttribute("store", store);
+
         return "form-update-store";
     }
 
     @PostMapping("/store/update")
     public String updateStoreSubmit(
             @ModelAttribute StoreModel store,
-            Model model
+            Model model,
+            @RequestParam(value="jamBuka")String buka,
+            @RequestParam(value="jamTutup")String tutup
     ) {
-        storeService.generateCode(store);
-        storeService.updateStore(store);
-        model.addAttribute("name", store.getName());
-        model.addAttribute("kode", store.getStore_code());
-        return "update-store";
+        if (storeService.cekBuka(buka,tutup)) {
+            return "update-store-buka";
+        }
+        else {
+            model.addAttribute("name", store.getName());
+            storeService.generateCode(store);
+            storeService.updateStore(store);
+            model.addAttribute("kode", store.getStore_code());
+            return "update-store";
+        }
     }
 
     @GetMapping("/store/{id}/assign-boba")

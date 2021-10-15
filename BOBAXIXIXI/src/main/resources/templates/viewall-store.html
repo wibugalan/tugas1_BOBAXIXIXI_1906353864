@@ -32,7 +32,7 @@
         <tbody>
         <tr th:each="store, iterationStatus : ${listStore}"
             th:style="${iterationStatus.even} ? 'background: #F5F5DC;'">
-            <td th:text="${store.id}"></td>
+            <td th:text="${iterationStatus.index+1}"></td>
             <td th:text="${store.name }"></td>
             <td th:text="${store.store_code}"></td>
             <td th:text="${store.address}"></td>
