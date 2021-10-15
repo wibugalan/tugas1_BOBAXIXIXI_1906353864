@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <title>Boba assigned Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body style="background: #FAEBD7">
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 class="text-center" th:text="'Store Successfully Updated for Boba Tea ' + ${boba.name}"></h2>
+                <a class="text text-warning text-center" th:href="@{/boba}" style="text-decoration: none;"><-- back to list of boba tea</a>
+                <div th:if="*{listStore.size() != 0}">
+                    <h4 class="text-center" th:text="'List of Store'"></h4>
+                    <table class="table">
+                        <thead>
+                        <tr style="background: #6D4C41;color: white">
+                            <th></th>
+                            <th>Store Code</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Operational Hour</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="store, iterationStatus : ${listStore}"
+                            th:style="${iterationStatus.even} ? 'background: #F5F5DC;'">
+                            <td>
+                            </td>
+                            <td th:text="${store.store_code}"></td>
+                            <td th:text="${store.name }"></td>
+                            <td th:text="${store.address}"></td>
+                            <td th:text="${store.open_hour} + ' - ' + ${store.close_hour}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="*{listStore.size() != 0}">
+                    <h2 class="text-center" th:text="'No Store Assigned'"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
