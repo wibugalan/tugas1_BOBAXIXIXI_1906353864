@@ -34,7 +34,7 @@
                 <tr th:each="store, iterationStatus : ${listStore}"
                     th:style="${iterationStatus.even} ? 'background: #F5F5DC;'">
                     <td>
-                        <input type="checkbox" name="store" th:value="${store.id}">
+                        <input type="checkbox" name="store" th:value="${store.id}" th:checked="${listChecker[iterationStatus.index]}">
                     </td>
                     <td th:text="${store.store_code}"></td>
                     <td th:text="${store.name }"></td>

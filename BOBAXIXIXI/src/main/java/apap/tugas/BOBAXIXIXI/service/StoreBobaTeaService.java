@@ -11,4 +11,5 @@ public interface StoreBobaTeaService {
     void generateCode(StoreBobaTeaModel storeBobaTea);
     List<StoreBobaTeaModel> getStoreBobaTeaList();
     List<Long> getStoreByBoba(BobaTeaModel boba);
+    void deleteStoreBobaTeaService(StoreBobaTeaModel storeBobaTea);
 }

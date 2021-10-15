@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -168,6 +170,24 @@ public class StoreController {
     ) {
         StoreModel store = storeService.getStoreById(id);
         List<BobaTeaModel> listBoba = bobaTeaService.getBobaTeaList();
+        List<Boolean> list= new ArrayList<Boolean>(Arrays.asList(new Boolean[listBoba.size()]));
+        Collections.fill(list, Boolean.FALSE);
+
+        List<BobaTeaModel> listUsedByBoba = new ArrayList<>();
+        for(StoreBobaTeaModel s: store.getListStoreBobaTea()) {
+            if (s.getStore().getId() == store.getId()) {
+                listUsedByBoba.add(s.getBobaTea());
+            }
+        }
+
+        for (int i = 0; i < listBoba.size(); i++) {
+            for (BobaTeaModel s: listUsedByBoba) {
+                if (listBoba.get(i).getId() == s.getId()) {
+                    list.set(i, true);
+                }
+            }
+        }
+        model.addAttribute("listChecker", list);
         model.addAttribute("storeBoba", new StoreBobaTeaModel());
         model.addAttribute("store", store);
         model.addAttribute("listBoba", listBoba);
@@ -179,20 +199,33 @@ public class StoreController {
             @ModelAttribute StoreBobaTeaModel storeBoba,
             @PathVariable Long id,
             Model model,
-            @RequestParam(value="boba")Long[] bobaList
+            @RequestParam(value="boba",required = false)Long[] bobaList
     ) {
         StoreModel store = storeService.getStoreById(id);
-        storeBoba.setStore(store);
-        for(Long i: bobaList) {
-            StoreBobaTeaModel temp = new StoreBobaTeaModel();
-            temp.setStore(store);
-            temp.setBobaTea(bobaTeaService.getBobaById(i));
-            storeBobaTeaService.generateCode(temp);
-            storeBobaTeaService.addStoreBoba(temp);
+
+        List<StoreBobaTeaModel> tempList = new ArrayList<>();
+        for (StoreBobaTeaModel s: storeBobaTeaService.getStoreBobaTeaList()) {
+            if (s.getStore().getId() == id) {
+                tempList.add(s);
+            }
+        }
+        int loop = tempList.size();
+        for (int i = 0; i < loop; i++) {
+            storeBobaTeaService.deleteStoreBobaTeaService(tempList.get(i));
         }
         List<BobaTeaModel> listBoba= new ArrayList<BobaTeaModel>();
-        for (StoreBobaTeaModel s : store.getListStoreBobaTea()) {
-            listBoba.add(s.getBobaTea());
+        if (bobaList != null) {
+            storeBoba.setStore(store);
+            for (Long i : bobaList) {
+                StoreBobaTeaModel temp = new StoreBobaTeaModel();
+                temp.setStore(store);
+                temp.setBobaTea(bobaTeaService.getBobaById(i));
+                storeBobaTeaService.generateCode(temp);
+                storeBobaTeaService.addStoreBoba(temp);
+            }
+            for (StoreBobaTeaModel s : store.getListStoreBobaTea()) {
+                listBoba.add(s.getBobaTea());
+            }
         }
         model.addAttribute("listBoba", listBoba);
         model.addAttribute("store", store);

@@ -38,7 +38,7 @@
                     </table>
                 </div>
                 <div th:unless="*{listBoba.size() != 0}">
-                    <h2 th:text="'No Boba Assigned'"></h2>
+                    <h2 class="text-center" th:text="'No Boba Assigned'"></h2>
                 </div>
                 <a class="text text-warning" th:href="@{/store/} + ${store.id}" style="text-decoration: none;"><-- back to store detail</a>
             </div>

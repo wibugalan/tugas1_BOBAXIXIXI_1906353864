@@ -62,4 +62,9 @@ public class StoreBobaTeaServiceImpl implements  StoreBobaTeaService{
         return out;
 
     }
+
+    @Override
+    public void deleteStoreBobaTeaService(StoreBobaTeaModel storeBobaTea) {
+        storeBobaTeaDB.delete(storeBobaTea);
+    }
 }
