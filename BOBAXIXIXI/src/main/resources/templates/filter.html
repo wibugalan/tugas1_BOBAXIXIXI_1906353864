@@ -42,7 +42,7 @@
                     <tbody>
                     <tr th:each="manager, iterationStatus : ${listManager}"
                         th:style="${iterationStatus.even} ? 'font-weight:bold;'">
-                        <td th:text="${manager.id}"></td>
+                        <td th:text="${iterationStatus.index+1}"></td>
                         <td th:text="${manager.full_name}"></td>
                         <td th:if="${manager.gender} == 0">Female</td>
                         <td th:if="${manager.gender} == 1">Male</td>
