@@ -103,6 +103,7 @@ public class BobaTeaController {
     ) {
         BobaTeaModel boba = bobaTeaService.getBobaById(id);
         List<ToppingModel> listTopping =  toppingService.getToppingList();
+        model.addAttribute("hargaTopping", boba.getTopping().getPrice());
         model.addAttribute("listTopping", listTopping);
         model.addAttribute("boba", boba);
         return "form-update-boba";
@@ -111,7 +112,8 @@ public class BobaTeaController {
     @PostMapping("/boba/update")
     public String updateBobaSubmit(
             @ModelAttribute BobaTeaModel boba,
-            Model model
+            Model model,
+            @RequestParam(value="toppingPrice")Integer toppingPrice
     ) {
         List<StoreBobaTeaModel> listSB = storeBobaTeaService.getStoreBobaTeaList();
         boolean temp = false;
@@ -125,7 +127,7 @@ public class BobaTeaController {
             return "update-boba-assigned";
         }
         else {
-            bobaTeaService.updateBoba(boba);
+            bobaTeaService.updateBoba(boba, toppingPrice);
             model.addAttribute("name", boba.getName());
             return "update-boba";
         }

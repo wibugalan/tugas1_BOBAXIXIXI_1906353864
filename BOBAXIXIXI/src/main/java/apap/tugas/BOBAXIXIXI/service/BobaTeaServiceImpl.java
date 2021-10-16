@@ -21,6 +21,7 @@ public class BobaTeaServiceImpl implements BobaTeaService{
 
     @Override
     public void addBoba(BobaTeaModel boba){
+        boba.setPrice(boba.getPrice()+boba.getTopping().getPrice());
         bobaTeaDB.save(boba);
     }
 
@@ -48,7 +49,8 @@ public class BobaTeaServiceImpl implements BobaTeaService{
     }
 
     @Override
-    public void updateBoba(BobaTeaModel boba) {
+    public void updateBoba(BobaTeaModel boba, Integer price) {
+        boba.setPrice(boba.getPrice()+boba.getTopping().getPrice()-price);
         bobaTeaDB.save(boba);
     }
 }

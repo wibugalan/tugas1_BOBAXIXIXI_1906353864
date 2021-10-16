@@ -48,7 +48,7 @@
                     <tbody>
                     <tr th:each="boba, iterationStatus : ${listCariBoba}"
                         th:style="${iterationStatus.even} ? 'font-weight:bold;'">
-                        <td th:text="${boba.id}"></td>
+                        <td th:text="${iterationStatus.index+1}"></td>
                         <td th:text="${boba.price}"></td>
                         <td th:if="${boba.size} == 0">S</td>
                         <td th:if="${boba.size} == 1">M</td>

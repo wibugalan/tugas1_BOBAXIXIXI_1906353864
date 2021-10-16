@@ -18,6 +18,7 @@
                 <h2>Update Boba</h2>
                 <br>
                 <form th:action="@{/boba/update}" th:object="${boba}" method="POST">
+                    <input type="hidden" name="toppingPrice" th:value="${boba.topping.price}" />
                     <input type="hidden" th:field="*{id}" />
 
                     Boba Tea Name : <br>

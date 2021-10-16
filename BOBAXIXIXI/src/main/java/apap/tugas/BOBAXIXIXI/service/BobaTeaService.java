@@ -10,5 +10,5 @@ public interface BobaTeaService {
     BobaTeaModel getBobaById(Long id);
     BobaTeaModel getBobaByName(String name);
     void deleteBoba(BobaTeaModel boba);
-    void updateBoba(BobaTeaModel boba);
+    void updateBoba(BobaTeaModel boba, Integer price);
 }
